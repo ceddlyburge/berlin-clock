@@ -82,6 +82,6 @@ from .main import *
 # def test_minutes_4():
 #     assert "YYYY" == get_minutes(4)
 
-def test_get_clock():
-    assert ["O","RROO","RROO","YYYYYYYYYYY","YOOO"] == get_clock("12:56:01")
+def test_get_berlin_clock_text_representation():
+    assert ["O","RROO","RROO","YYYYYYYYYYY","YOOO"] == get_berlin_clock_text_representation("12:56:01")
 
