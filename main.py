@@ -1,23 +1,33 @@
-def get_berlin_clock_text_representation(julian_time):
+def berlin_clock_time(julian_time):
     hours, minutes, seconds = list(map(int, julian_time.split(":")))
-    
-    seconds_row =     get_seconds_row_lights(seconds % 2)
-    five_hour_row =   get_row_lights      (time_per_light=5,        value=hours,   light_colour="R", lights_in_row=4)
-    one_hour_row =    get_child_row_lights(parent_time_per_light=5, value=hours,   light_colour="R")
-    five_minute_row = get_row_lights      (time_per_light=5,        value=minutes, light_colour="Y", lights_in_row=11)
-    one_minute_row =  get_child_row_lights(parent_time_per_light=5, value=minutes, light_colour="Y")
-    
-    return [
-        seconds_row, 
-        five_hour_row,
-        one_hour_row, 
-        five_minute_row, 
-        one_minute_row]
 
-def get_seconds_row_lights(seconds):
+    return [
+        seconds_row_lights(
+            seconds % 2),
+        parent_row_lights(
+            time_per_light=5,
+            value=hours, 
+            light_colour="R",
+            lights_in_row=4),
+        child_remainder_row_lights(
+            parent_time_per_light=5,
+            value=hours,
+            light_colour="R"),
+        parent_row_lights(
+            time_per_light=5,
+            value=minutes, 
+            light_colour="Y",
+            lights_in_row=11),
+        child_remainder_row_lights(
+            parent_time_per_light=5,
+            light_colour="Y",
+            value=minutes)
+    ]
+
+def seconds_row_lights(seconds):
     return ["Y", "O"][seconds % 2]
 
-def get_row_lights(
+def parent_row_lights(
         time_per_light, 
         value, 
         light_colour, 
@@ -27,7 +37,7 @@ def get_row_lights(
         lights_on=value // time_per_light, 
         lights_in_row=lights_in_row)
 
-def get_child_row_lights(
+def child_remainder_row_lights(
         parent_time_per_light, 
         value, 
         light_colour):   
@@ -44,6 +54,6 @@ def row_lights(
 
 if __name__ == "__main__":
     time = input()
-    result = get_berlin_clock_text_representation(time)
+    result = berlin_clock_time(time)
     print ("\n".join(result))
 
